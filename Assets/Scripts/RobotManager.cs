@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Robot
+public class Robot : MonoBehaviour
 {
     public int ID;
-    private List<Limb> limbList;
+    private List<GameObject> limbList;
 
     public float value;
 
@@ -20,70 +20,19 @@ public class Robot
 
     private void CreateRobot(float minVal)
     {
-        limbList = new List<Limb>();
+        limbList = new List<GameObject>();
         int i = 0;
         Debug.Log("MinVal: " + minVal);
-        while(minVal > value)
+        while(minVal > value && i < 7)
         {
-            Limb newLimb = new Limb(i);
+            GameObject limbObject = Resources.Load("Limb") as GameObject;
+            Limb newLimb = limbObject.GetComponent<Limb>();
+            newLimb.Initialize(i);
             value += newLimb.value;
-            limbList.Add(newLimb);
+            limbList.Add(limbObject);
             i++;
         }
 
     }
 
-
-
-    public class Limb
-    {
-        public int ID;
-        public int quality;
-        public float value;
-
-        GameObject limbObject;
-
-            
-
-        public Limb(int type)
-        {
-
-            switch(type)
-            {
-                case 0: CreateTorso();
-                    break;
-                case 1: CreateHead();
-                    break;
-                default: CreateLimb();
-                    break;
-            }
-        }
-
-        private void CreateLimb()
-        {
-            var dLimb = (GameObject)Resources.Load("dLimb", typeof(GameObject));
-            quality = Random.Range(0, 100);
-            if (quality != 0)
-                value = Random.Range(100, 1000);
-            else
-                value = 0;
-
-            limbObject = Object.Instantiate(dLimb);
-        }
-
-        private void CreateTorso()
-        {
-            quality = 100;
-            value = 100;
-            limbObject = Object.Instantiate(Resources.Load("dTorso", typeof(GameObject))) as GameObject;
-        }
-
-        private void CreateHead()
-        {
-            var dHead = (GameObject)Resources.Load("dHead", typeof(GameObject));
-            quality = 100;
-            value = 100;
-            limbObject = Object.Instantiate(dHead);
-        }
-    }
 }

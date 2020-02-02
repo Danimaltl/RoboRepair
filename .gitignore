@@ -4,6 +4,11 @@
 [Bb]uild/
 [Bb]uilds/
 Assets/AssetStoreTools*
+Assets/Andromeda System.meta
+Assets/Andromeda System/*
+Assets/Starfield Skybox.meta
+Assets/Starfield Skybox/*
+
 
 # Visual Studio 2015 cache directory
 /.vs/

@@ -2,8 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+enum LimbTypes
+{
+    head,upperTorso,lowerTorso,leftArm,rightArm,leftLeg,rightLeg
+}
 public class Limb : MonoBehaviour
 {
+    //Game Data
+    public int ID;
+    public int quality;
+    public float value;
+
+    //Physics Data
     MeshRenderer mesh;
     public Rigidbody jointParent;
     public bool jointBroken = false;
@@ -13,7 +23,7 @@ public class Limb : MonoBehaviour
     public Vector3 savedConnectedAnchor;
     public Quaternion savedOrientation;
     public float breakForce = 600;
-    // Start is called before the first frame update
+
     void Start()
     {
         mesh = GetComponent<MeshRenderer>();
@@ -23,18 +33,54 @@ public class Limb : MonoBehaviour
         savedOrientation = transform.rotation;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (GetComponents<CharacterJoint>().Length > 1)
-        {
-            Debug.LogError("Multiple joints on limb!");
-            Debug.DebugBreak();
-        }
+        //if (GetComponents<CharacterJoint>().Length > 1)
+        //{
+        //    Debug.LogError("Multiple joints on limb!");
+        //    Debug.DebugBreak();
+        //}
     }
 
     public void SetColor(Color color)
     {
         mesh.material.SetColor("_Color", color);
+    }
+
+    public void Initialize(int type)
+    {
+
+        switch (type)
+        {
+            case 0:
+                CreateHead();
+                break;
+            case 1:
+                CreateTorso();
+                break;
+            default:
+                CreateLimb();
+                break;
+        }
+    }
+
+    private void CreateLimb()
+    {
+        quality = Random.Range(1, 100);
+        value = Random.Range(100, 1000);
+
+    }
+
+    private void CreateTorso()
+    {
+        quality = 100;
+        value = 100;
+    }
+
+    private void CreateHead()
+    {
+        quality = 100;
+        value = 100;
+        
     }
 }
